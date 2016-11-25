@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+	<meta name="author" content="Cx Rana">
+	<meta name="description" content="Custom google Map For Bangladesh">
+    <title>Custom Google Map Example - For Bangladesh </title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 2px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+	  
+	  .adp-step, .adp-text {
+    width: 100%;
+    background: #3d5b99;
+    padding: 10px;
+    color: white;
+}
+	  
+	  .adp-summary {
+    padding: 5px;
+    background: #dd4b39;
+    height: 18px;
+    text-align: center;
+    font-size: 16px;
+    color: #eee;
+    font-weight: bold;
+}
+	  
+    </style>
+    <style>
+      #directions-panel {
+        height: 100%;
+        float: right;
+        width: 390px;
+        overflow: auto;
+      }
+
+      #map-canvas {
+        margin-right: 400px;
+      }
+
+      #control {
+    background: #dd4b39;
+    padding: 8px;
+    font-size: 18px;
+    font-family: Arial;
+    border: 1px solid #5f84f2;
+    box-shadow: 3px 3px 3px 3px rgba(33, 33, 33, 0.4);
+    display: none;
+}
+
+ #intro {
+    background: #dd4b39;
+    font-size: 13px;
+    font-family: Arial;
+	margin:5px;
+	color:white;
+	text-align:center;
+}
+
+      @media print {
+        #map-canvas {
+          height: 500px;
+          margin: 0;
+        }
+
+        #directions-panel {
+          float: none;
+          width: auto;
+        }
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script>
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var mapOptions = {
+    zoom: 7,
+    center: new google.maps.LatLng(23.68499, 90.35633)
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+  directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+  var control = document.getElementById('control');
+  control.style.display = 'block';
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+}
+
+function calcRoute() {
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="control">
+	<div id="intro">Please Select Start and End Place</div>
+      <strong>Start:</strong>
+      <select id="start" onchange="calcRoute();">
+       <option value="dhaka">Dhaka</option>
+        <option value="sylhet">Sylhet</option>
+        <option value="barishal">Barishal</option>
+        <option value="comilla">Comilla</option>
+        <option value="feni">Feni</option>
+        <option value="rangamati">Rangamati</option>
+        <option value="coxsbazar">Cox's Bazar</option>
+        <option value="bandarban">Bandarban</option>
+		<option value="chittagong">Chittagong</option>
+		<option value="pabna">Pabna</option>
+      </select>
+      <strong>End:</strong>
+      <select id="end" onchange="calcRoute();">
+       <option value="dhaka">Dhaka</option>
+        <option value="sylhet">Sylhet</option>
+        <option value="barishal">Barishal</option>
+        <option value="comilla">Comilla</option>
+        <option value="feni">Feni</option>
+        <option value="rangamati">Rangamati</option>
+        <option value="coxsbazar">Cox's Bazar</option>
+        <option value="bandarban">Bandarban</option>
+		<option value="chittagong">Chittagong</option>
+		<option value="pabna">Pabna</option>
+      </select>
+    </div>
+    <div id="directions-panel"></div>
+    <div id="map-canvas"></div>
+  </body>
+</html>
